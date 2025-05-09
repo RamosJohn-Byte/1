@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Add Supabase URL and Key as meta tags -->
+    <meta name="supabase-url" content="https://lfphlaompbazveppzgwg.supabase.co">
+    <meta name="supabase-key" content="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxmcGhsYW9tcGJhenZlcHB6Z3dnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3OTQ4OTEsImV4cCI6MjA2MjM3MDg5MX0.lvR2rDzWLw4mJfbzNTz43DEpUWsixEa_DMnyFDV-mRw">
+    <!-- Include Supabase JS from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Online Quiz System</h1>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#" id="home-link" class="active">Home</a></li>
+                    <li><a href="#" id="quizzes-link">Quizzes</a></li>
+                    <li><a href="#" id="results-link">My Results</a></li>
+                    <li><a href="#" id="admin-link" class="hidden">Admin Panel</a></li>
+                    <li class="auth-links">
+                        <a href="#" id="login-link">Login</a>
+                        <a href="#" id="register-link">Register</a>
+                        <a href="#" id="logout-link" class="hidden">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="content">
+            <!-- Home Page -->
+            <section id="home-section" class="active-section">
+                <h2>Welcome to the Online Quiz System</h2>
+                <p>Test your knowledge with our interactive quizzes!</p>
+                <div class="features">
+                    <div class="feature">
+                        <h3>Take Quizzes</h3>
+                        <p>Challenge yourself with various quizzes on different topics.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Track Progress</h3>
+                        <p>View your results and track your improvement over time.</p>
+                    </div>
+                    <div class="feature">
+                        <h3>Create Quizzes</h3>
+                        <p>Administrators can create and manage quizzes.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Auth Sections -->
+            <section id="login-section" class="auth-section">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+            </section>
+
+            <section id="register-section" class="auth-section">
+                <h2>Register</h2>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </section>
+
+            <!-- Quizzes Section -->
+            <section id="quizzes-section">
+                <h2>Available Quizzes</h2>
+                <div id="quizzes-list" class="quiz-grid">
+                    <!-- Quizzes will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Take Quiz Section -->
+            <section id="take-quiz-section">
+                <div id="quiz-header">
+                    <h2 id="quiz-title">Quiz Title</h2>
+                    <p id="quiz-description">Quiz Description</p>
+                </div>
+                <div id="quiz-progress">
+                    <span id="current-question">1</span>/<span id="total-questions">10</span>
+                </div>
+                <div id="question-container">
+                    <h3 id="question-text">Question text will appear here</h3>
+                    <div id="options-container">
+                        <!-- Options will be loaded here -->
+                    </div>
+                </div>
+                <div id="quiz-navigation">
+                    <button id="prev-question" class="btn">Previous</button>
+                    <button id="next-question" class="btn">Next</button>
+                    <button id="submit-quiz" class="btn btn-primary">Submit Quiz</button>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results-section">
+                <h2>My Quiz Results</h2>
+                <div id="results-list">
+                    <!-- Results will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Quiz Result Detail Section -->
+            <section id="result-detail-section">
+                <h2>Quiz Result</h2>
+                <div id="result-summary">
+                    <h3 id="result-quiz-title">Quiz Title</h3>
+                    <p>Score: <span id="result-score">0</span>/<span id="result-total">0</span></p>
+                    <p>Completed on: <span id="result-date">Date</span></p>
+                </div>
+                <div id="result-questions">
+                    <!-- Questions and answers will be loaded here -->
+                </div>
+                <button id="back-to-results" class="btn">Back to Results</button>
+            </section>
+
+            <!-- Admin Sections -->
+            <section id="admin-section">
+                <h2>Admin Panel</h2>
+                <div class="admin-tabs">
+                    <button id="manage-quizzes-tab" class="tab-btn active">Manage Quizzes</button>
+                    <button id="view-results-tab" class="tab-btn">View All Results</button>
+                </div>
+                <div id="admin-content">
+                    <div id="manage-quizzes-content" class="tab-content active">
+                        <button id="create-quiz-btn" class="btn btn-primary">Create New Quiz</button>
+                        <div id="admin-quizzes-list">
+                            <!-- Admin quizzes will be loaded here -->
+                        </div>
+                    </div>
+                    <div id="view-results-content" class="tab-content">
+                        <div id="admin-results-list">
+                            <!-- Admin results will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Create/Edit Quiz Section -->
+            <section id="edit-quiz-section">
+                <h2 id="edit-quiz-header">Create New Quiz</h2>
+                <form id="quiz-form">
+                    <div class="form-group">
+                        <label for="quiz-title-input">Quiz Title</label>
+                        <input type="text" id="quiz-title-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quiz-description-input">Description</label>
+                        <textarea id="quiz-description-input" rows="3"></textarea>
+                    </div>
+                    <h3>Questions</h3>
+                    <div id="questions-container">
+                        <!-- Questions will be added here -->
+                    </div>
+                    <button type="button" id="add-question-btn" class="btn">Add Question</button>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-quiz-btn" class="btn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Quiz</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <div id="notification" class="notification">
+            <span id="notification-message"></span>
+            <button id="notification-close">&times;</button>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Online Quiz System. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Templates -->
+    <template id="question-template">
+        <div class="question-item">
+            <div class="form-group">
+                <label>Question Text</label>
+                <input type="text" class="question-text-input" required>
+            </div>
+            <div class="options-container">
+                <!-- Options will be added here -->
+            </div>
+            <button type="button" class="add-option-btn btn">Add Option</button>
+            <button type="button" class="remove-question-btn btn btn-danger">Remove Question</button>
+        </div>
+    </template>
+
+    <template id="option-template">
+        <div class="option-item">
+            <div class="form-group">
+                <label>Option Text</label>
+                <input type="text" class="option-text-input" required>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="radio" name="correct-option" class="correct-option">
+                    Correct Answer
+                </label>
+            </div>
+            <button type="button" class="remove-option-btn btn btn-danger">Remove Option</button>
+        </div>
+    </template>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/quizzes.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
