@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Register</h2>
+        <form id="registerForm">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Initialize Supabase -->
+    <script>
+        // Initialize Supabase client with your credentials
+        const supabaseUrl = 'https://onlgopvvyejgrdygerus.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ubGdvcHZ2eWVqZ3JkeWdlcnVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3NjAxNTksImV4cCI6MjA2MjMzNjE1OX0.qoSaBbss_wUnH0Y0O4pe4l7BGyn7tscxGCDvlKMsoPo';
+        const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+    </script>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                alert(error.message);
+            } else {
+                alert('Registration successful! Check your email to verify your account.');
+                window.location.href = 'login.html'; // Redirect to login page
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!-- Supabase JS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Initialize Supabase -->
+<script>
+    // Initialize Supabase client with your credentials
+    const supabaseUrl = 'https://onlgopvvyejgrdygerus.supabase.co';
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ubGdvcHZ2eWVqZ3JkeWdlcnVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3NjAxNTksImV4cCI6MjA2MjMzNjE1OX0.qoSaBbss_wUnH0Y0O4pe4l7BGyn7tscxGCDvlKMsoPo';
+    const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+    
+    console.log('Supabase client initialized');
+</script>
+<script src="js/test-supabase.js"></script>

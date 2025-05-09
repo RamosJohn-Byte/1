@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "**/*.html", "use": "@vercel/static" },
+    { "src": "css/**", "use": "@vercel/static" },
+    { "src": "js/**", "use": "@vercel/static" },
+    { "src": "images/**", "use": "@vercel/static" }
+  ],
+  "routes": [{ "handle": "filesystem" }, { "src": "/(.*)", "dest": "/index.html" }],
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://onlgopvvyejgrdygerus.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9ubGdvcHZ2eWVqZ3JkeWdlcnVzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3NjAxNTksImV4cCI6MjA2MjMzNjE1OX0.qoSaBbss_wUnH0Y0O4pe4l7BGyn7tscxGCDvlKMsoPo"
+  }
+}
